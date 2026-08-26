@@ -1,18 +1,18 @@
-#define MyAppName "VStube"
-#define MyAppVersion "2.0.0"
+#define MyAppName "Vsy ytd"
+#define MyAppVersion "2.1.0"
 #define MyAppPublisher "frsttw"
-#define MyAppExeName "VStube.exe"
+#define MyAppExeName "Vsy ytd.exe"
 
 [Setup]
 AppId={{75EE8DFB-12E8-45B1-8A86-A8E0431EC8A9}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-DefaultDirName={autopf}\VStube
+DefaultDirName={autopf}\Vsy ytd
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 OutputDir=installer
-OutputBaseFilename=VStube-Setup
+OutputBaseFilename=Vsy-ytd-Setup
 SetupIconFile=assets\app.ico
 Compression=lzma2/ultra64
 SolidCompression=yes

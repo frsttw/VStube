@@ -12,7 +12,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
 
-APP_NAME = "VStube"
+APP_NAME = "Vsy ytd"
 SETTINGS_DIR = Path(os.environ.get("APPDATA", str(Path.home()))) / "VStube"
 SETTINGS_FILE = SETTINGS_DIR / "config.json"
 LEGACY_SETTINGS_FILE = Path(os.environ.get("APPDATA", str(Path.home()))) / "Baixador de Videos e Audios" / "config.json"
@@ -121,7 +121,7 @@ class DownloaderApp(tk.Tk):
         header.pack(fill="x", pady=(0, 18))
         titles = ttk.Frame(header)
         titles.pack(side="left", fill="x", expand=True)
-        ttk.Label(titles, text="// VSTUBE", style="Title.TLabel").pack(anchor="w")
+        ttk.Label(titles, text="// Vsy ytd", style="Title.TLabel").pack(anchor="w")
         ttk.Label(titles, text="VÍDEO + ÁUDIO  •  RÁPIDO  •  LOCAL", style="Hint.TLabel").pack(anchor="w", pady=(3, 0))
         ttk.Label(header, text="[ SYSTEM READY ]", style="Badge.TLabel").pack(side="right", anchor="n", pady=5)
 

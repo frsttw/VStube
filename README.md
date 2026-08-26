@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/vstube-icon.png" width="128" alt="Ícone do VStube">
+  <img src="assets/vstube-icon.png" width="128" alt="Ícone do Vsy ytd">
 </p>
 
-<h1 align="center">VStube</h1>
+<h1 align="center">Vsy ytd</h1>
 
 <p align="center">
   Baixe vídeos e extraia áudios com uma interface elegante, rápida e totalmente local.
@@ -11,21 +11,21 @@
 <p align="center">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-7c4dff?style=for-the-badge&logo=windows11&logoColor=white">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.13-a866ff?style=for-the-badge&logo=python&logoColor=white">
-  <img alt="Versão" src="https://img.shields.io/badge/versão-2.0.0-40e0d0?style=for-the-badge">
+  <img alt="Versão" src="https://img.shields.io/badge/versão-2.1.0-40e0d0?style=for-the-badge">
   <img alt="Licença" src="https://img.shields.io/badge/licença-MIT-f4f4f5?style=for-the-badge">
 </p>
 
 <p align="center">
-  <a href="https://github.com/frsttw/VStube/releases/latest/download/VStube-Setup.exe"><strong>⬇ Baixar o VStube para Windows</strong></a>
+  <a href="https://github.com/frsttw/VStube/releases/latest/download/Vsy-ytd-Setup.exe"><strong>⬇ Baixar o Vsy ytd para Windows</strong></a>
 </p>
 
 <p align="center">
-  <img src="docs/vstube-preview.png" width="860" alt="Interface do VStube">
+  <img src="docs/vstube-preview.png" width="860" alt="Interface do Vsy ytd">
 </p>
 
 ## Sobre
 
-O **VStube** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência visual simples. Cole um link, escolha vídeo ou áudio, defina a qualidade e faça o download sem abrir o terminal.
+O **Vsy ytd** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência visual simples. Cole um link, escolha vídeo ou áudio, defina a qualidade e faça o download sem abrir o terminal.
 
 ## Destaques
 
@@ -40,8 +40,8 @@ O **VStube** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência visu
 
 ## Como usar
 
-1. Baixe o `VStube-Setup.exe` na página de Releases.
-2. Execute o instalador e abra o VStube pelo atalho criado.
+1. Baixe o `Vsy-ytd-Setup.exe` na página de Releases.
+2. Execute o instalador e abra o Vsy ytd pelo atalho criado.
 3. Cole um ou mais links, um por linha.
 4. Escolha vídeo ou áudio e defina a qualidade.
 5. Selecione a pasta de destino e clique em **INICIAR DOWNLOAD**.
@@ -63,7 +63,7 @@ O **VStube** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência visu
 ## Estrutura
 
 ```text
-VStube/
+Vsy ytd/
 ├── app.py                 # Interface e lógica principal
 ├── assets/                # Identidade visual
 ├── docs/                  # Imagens da documentação
@@ -80,15 +80,15 @@ Instale Python, PyInstaller, Inno Setup, yt-dlp, FFmpeg e Deno. Em seguida:
 .\build.ps1
 ```
 
-O script reúne as ferramentas, gera `VStube.exe` e cria `VStube-Setup.exe`.
+O script reúne as ferramentas, gera `Vsy ytd.exe` e cria `Vsy-ytd-Setup.exe`.
 
 ## Privacidade
 
-O VStube funciona localmente e não mantém servidor próprio, conta de usuário ou telemetria. Links, preferências e arquivos permanecem no computador do usuário. A única configuração persistida é a última pasta de destino escolhida.
+O Vsy ytd funciona localmente e não mantém servidor próprio, conta de usuário ou telemetria. Links, preferências e arquivos permanecem no computador do usuário. A única configuração persistida é a última pasta de destino escolhida.
 
 ## Uso responsável
 
-Use o VStube somente para conteúdo próprio, de domínio público ou que você tenha autorização para baixar. O aplicativo não contorna proteções nem acessa conteúdo privado.
+Use o Vsy ytd somente para conteúdo próprio, de domínio público ou que você tenha autorização para baixar. O aplicativo não contorna proteções nem acessa conteúdo privado.
 
 ---
 

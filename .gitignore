@@ -6,4 +6,5 @@ assets/tools/
 assets/app-icon.png
 assets/icon-extraido.png
 assets/ui-preview.png
+assets/icon-preview-*.png
 *.pyc

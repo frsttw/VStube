@@ -2,6 +2,17 @@
 
 Todas as mudanças relevantes do VStube são registradas neste arquivo.
 
+## [2.1.0] - 2026-08-26
+
+- Aplicativo renomeado para Vsy ytd, com preferências anteriores preservadas.
+- Executável, instalador e atalhos atualizados com o novo nome.
+
+### Corrigido
+
+- Transparência real nos cantos do ícone.
+- Remoção da borda escura residual nas extremidades.
+- Melhor acabamento do ícone no GitHub e em tamanhos pequenos do Windows.
+
 ## [2.0.0] - 2026-08-26
 
 ### Adicionado
