@@ -1,20 +1,75 @@
-# Baixador de Vídeos e Áudios
+<p align="center">
+  <img src="assets/vstube-icon.png" width="128" alt="Ícone do VStube">
+</p>
 
-Aplicativo pessoal para Windows com interface gráfica para baixar vídeos ou extrair áudio usando yt-dlp e FFmpeg.
+<h1 align="center">VStube</h1>
 
-## Recursos
+<p align="center">
+  Baixe vídeos e extraia áudios com uma interface elegante, rápida e totalmente local.
+</p>
 
-- Vídeo em várias resoluções.
-- Áudio em MP3 ou M4A.
-- Links individuais ou playlists.
-- Vários links, um por linha.
-- Barra de progresso e cancelamento.
-- Memoriza automaticamente a última pasta de destino.
-- Instalador inclui yt-dlp, FFmpeg, FFprobe e Deno.
-- Interface escura inspirada na estética cyberpunk do Kerosene.
+<p align="center">
+  <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-7c4dff?style=for-the-badge&logo=windows11&logoColor=white">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.13-a866ff?style=for-the-badge&logo=python&logoColor=white">
+  <img alt="Versão" src="https://img.shields.io/badge/versão-2.0.0-40e0d0?style=for-the-badge">
+</p>
 
-Use somente para conteúdo próprio, de domínio público ou que você tenha permissão para baixar.
+<p align="center">
+  <img src="docs/vstube-preview.png" width="860" alt="Interface do VStube">
+</p>
 
-## Compilação
+## Sobre
 
-No Windows, instale Python, PyInstaller, Inno Setup, yt-dlp, FFmpeg e Deno. Depois execute `build.ps1`. O script reúne as ferramentas, cria o aplicativo portátil e gera o instalador.
+O **VStube** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência visual simples. Cole um link, escolha vídeo ou áudio, defina a qualidade e faça o download sem abrir o terminal.
+
+## Destaques
+
+- Download de vídeos em até 4K.
+- Extração de áudio em MP3 ou M4A.
+- Compatibilidade com links individuais e playlists.
+- Processamento de vários links, um por linha.
+- Barra de progresso e cancelamento em tempo real.
+- Memória automática da última pasta escolhida.
+- Interface escura responsiva com identidade visual própria.
+- Instalador independente com todos os componentes necessários.
+
+## Tecnologias
+
+| Camada | Tecnologia |
+| --- | --- |
+| Interface | Python + Tkinter/ttk |
+| Downloads | yt-dlp |
+| Áudio e vídeo | FFmpeg + FFprobe |
+| Runtime auxiliar | Deno |
+| Empacotamento | PyInstaller |
+| Instalador | Inno Setup |
+
+## Estrutura
+
+```text
+VStube/
+├── app.py                 # Interface e lógica principal
+├── assets/                # Identidade visual
+├── docs/                  # Imagens da documentação
+├── VStube.spec            # Empacotamento do executável
+├── installer.iss          # Configuração do instalador
+└── build.ps1              # Build automatizado para Windows
+```
+
+## Compilar no Windows
+
+Instale Python, PyInstaller, Inno Setup, yt-dlp, FFmpeg e Deno. Em seguida:
+
+```powershell
+.\build.ps1
+```
+
+O script reúne as ferramentas, gera `VStube.exe` e cria `VStube-Setup.exe`.
+
+## Uso responsável
+
+Use o VStube somente para conteúdo próprio, de domínio público ou que você tenha autorização para baixar. O aplicativo não contorna proteções nem acessa conteúdo privado.
+
+---
+
+<p align="center">Desenvolvido por <strong>@frsttw</strong></p>

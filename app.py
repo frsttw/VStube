@@ -12,9 +12,10 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
 
-APP_NAME = "Baixador de Vídeos e Áudios"
-SETTINGS_DIR = Path(os.environ.get("APPDATA", str(Path.home()))) / "Baixador de Videos e Audios"
+APP_NAME = "VStube"
+SETTINGS_DIR = Path(os.environ.get("APPDATA", str(Path.home()))) / "VStube"
 SETTINGS_FILE = SETTINGS_DIR / "config.json"
+LEGACY_SETTINGS_FILE = Path(os.environ.get("APPDATA", str(Path.home()))) / "Baixador de Videos e Audios" / "config.json"
 VIDEO_QUALITIES = ("Melhor disponível", "Até 2160p (4K)", "Até 1440p", "Até 1080p", "Até 720p", "Até 480p", "Até 360p")
 AUDIO_FORMATS = ("MP3", "M4A")
 
@@ -62,7 +63,8 @@ class DownloaderApp(tk.Tk):
     def _load_output_dir() -> str:
         default = str(Path.home() / "Downloads" / "Vídeos e áudios")
         try:
-            data = json.loads(SETTINGS_FILE.read_text(encoding="utf-8"))
+            source = SETTINGS_FILE if SETTINGS_FILE.exists() else LEGACY_SETTINGS_FILE
+            data = json.loads(source.read_text(encoding="utf-8"))
             saved = data.get("output_dir")
             return saved if isinstance(saved, str) and saved.strip() else default
         except (OSError, ValueError, TypeError):
@@ -119,8 +121,8 @@ class DownloaderApp(tk.Tk):
         header.pack(fill="x", pady=(0, 18))
         titles = ttk.Frame(header)
         titles.pack(side="left", fill="x", expand=True)
-        ttk.Label(titles, text="// MEDIA DOWNLOADER", style="Title.TLabel").pack(anchor="w")
-        ttk.Label(titles, text="VÍDEO + ÁUDIO  •  YT-DLP CORE  •  LOCAL TOOL", style="Hint.TLabel").pack(anchor="w", pady=(3, 0))
+        ttk.Label(titles, text="// VSTUBE", style="Title.TLabel").pack(anchor="w")
+        ttk.Label(titles, text="VÍDEO + ÁUDIO  •  RÁPIDO  •  LOCAL", style="Hint.TLabel").pack(anchor="w", pady=(3, 0))
         ttk.Label(header, text="[ SYSTEM READY ]", style="Badge.TLabel").pack(side="right", anchor="n", pady=5)
 
         link_box = ttk.LabelFrame(root, text="[ 01 ]  LINKS", padding=14)

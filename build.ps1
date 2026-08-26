@@ -19,7 +19,7 @@ Copy-Item (Find-WinGetTool 'deno' 'DenoLand.Deno') (Join-Path $toolsDir 'deno.ex
 
 Push-Location $projectDir
 try {
-    python -m PyInstaller --noconfirm --clean '.\Baixador de Videos e Audios.spec'
+    python -m PyInstaller --noconfirm --clean '.\VStube.spec'
     $iscc = Join-Path $env:LOCALAPPDATA 'Programs\Inno Setup 6\ISCC.exe'
     if (-not (Test-Path $iscc)) { throw 'Inno Setup não foi encontrado.' }
     & $iscc '.\installer.iss'
