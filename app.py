@@ -37,8 +37,12 @@ class DownloaderApp(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title(APP_NAME)
-        self.geometry("830x650")
-        self.minsize(720, 590)
+        self.geometry("900x740")
+        self.minsize(780, 680)
+        try:
+            self.iconbitmap(sys.executable)
+        except tk.TclError:
+            pass
         self.ytdlp = find_program("yt-dlp")
         self.ffmpeg = find_program("ffmpeg")
         self.process: subprocess.Popen[str] | None = None
@@ -73,37 +77,68 @@ class DownloaderApp(tk.Tk):
             pass
 
     def _build_ui(self) -> None:
-        self.configure(bg="#f4f6f8")
+        bg = "#08080b"
+        panel = "#111016"
+        panel_alt = "#17141f"
+        purple = "#c86cff"
+        purple_dark = "#7130a8"
+        cyan = "#4fffe1"
+        text = "#f3eaff"
+        muted = "#a99bb8"
+        border = "#3b2850"
+        self.configure(bg=bg)
         style = ttk.Style(self)
-        try:
-            style.theme_use("vista")
-        except tk.TclError:
-            pass
-        style.configure("Title.TLabel", font=("Segoe UI", 19, "bold"), background="#f4f6f8")
-        style.configure("Hint.TLabel", font=("Segoe UI", 10), foreground="#52606d", background="#f4f6f8")
-        style.configure("Accent.TButton", font=("Segoe UI", 11, "bold"), padding=(18, 10))
+        style.theme_use("clam")
+        style.configure("TFrame", background=bg)
+        style.configure("Panel.TFrame", background=panel)
+        style.configure("TLabel", background=bg, foreground=text, font=("Cascadia Mono", 9))
+        style.configure("Panel.TLabel", background=panel, foreground=text, font=("Cascadia Mono", 9))
+        style.configure("Title.TLabel", font=("Cascadia Mono", 22, "bold"), foreground=purple, background=bg)
+        style.configure("Hint.TLabel", font=("Cascadia Mono", 9), foreground=muted, background=bg)
+        style.configure("Badge.TLabel", font=("Cascadia Mono", 8, "bold"), foreground=cyan, background=panel_alt, padding=(9, 5))
+        style.configure("TLabelframe", background=panel, bordercolor=border, lightcolor=border, darkcolor=border, relief="solid")
+        style.configure("TLabelframe.Label", background=bg, foreground=purple, font=("Cascadia Mono", 9, "bold"))
+        style.configure("TButton", background=panel_alt, foreground=text, bordercolor=border, focusthickness=1, focuscolor=purple, padding=(13, 8), font=("Cascadia Mono", 9))
+        style.map("TButton", background=[("active", "#2a1d38"), ("pressed", purple_dark)], foreground=[("disabled", "#665f70"), ("active", "#ffffff")])
+        style.configure("Accent.TButton", background=purple_dark, foreground="#ffffff", bordercolor=purple, font=("Cascadia Mono", 10, "bold"), padding=(20, 11))
+        style.map("Accent.TButton", background=[("active", "#8e3fd0"), ("pressed", "#5a2389"), ("disabled", "#33263d")])
+        style.configure("Danger.TButton", foreground="#ff83b8", background=panel_alt, bordercolor="#71304d")
+        style.configure("TEntry", fieldbackground="#0c0b10", foreground=text, insertcolor=cyan, bordercolor=border, padding=7)
+        style.configure("TCombobox", fieldbackground="#0c0b10", background=panel_alt, foreground=text, arrowcolor=purple, bordercolor=border, padding=6)
+        style.map("TCombobox", fieldbackground=[("readonly", "#0c0b10"), ("disabled", "#121116")], foreground=[("readonly", text), ("disabled", "#625b69")], selectbackground=[("readonly", "#0c0b10")], selectforeground=[("readonly", text)])
+        style.configure("TRadiobutton", background=panel, foreground=text, indicatorcolor="#0c0b10", font=("Cascadia Mono", 9))
+        style.map("TRadiobutton", background=[("active", panel)], indicatorcolor=[("selected", purple), ("active", purple_dark)])
+        style.configure("TCheckbutton", background=panel, foreground=text, indicatorcolor="#0c0b10", font=("Cascadia Mono", 9))
+        style.map("TCheckbutton", background=[("active", panel)], indicatorcolor=[("selected", cyan), ("active", purple_dark)])
+        style.configure("Kerosene.Horizontal.TProgressbar", troughcolor="#17131e", background=purple, bordercolor=border, lightcolor=purple, darkcolor=purple)
+        style.configure("Vertical.TScrollbar", background=panel_alt, troughcolor="#0c0b10", bordercolor=border, arrowcolor=purple)
 
-        root = ttk.Frame(self, padding=22)
+        root = ttk.Frame(self, padding=24)
         root.pack(fill="both", expand=True)
-        ttk.Label(root, text="Baixador de Vídeos e Áudios", style="Title.TLabel").pack(anchor="w")
-        ttk.Label(root, text="Baixe conteúdo que você tem permissão para salvar, sem usar o terminal.", style="Hint.TLabel").pack(anchor="w", pady=(2, 16))
+        header = ttk.Frame(root)
+        header.pack(fill="x", pady=(0, 18))
+        titles = ttk.Frame(header)
+        titles.pack(side="left", fill="x", expand=True)
+        ttk.Label(titles, text="// MEDIA DOWNLOADER", style="Title.TLabel").pack(anchor="w")
+        ttk.Label(titles, text="VÍDEO + ÁUDIO  •  YT-DLP CORE  •  LOCAL TOOL", style="Hint.TLabel").pack(anchor="w", pady=(3, 0))
+        ttk.Label(header, text="[ SYSTEM READY ]", style="Badge.TLabel").pack(side="right", anchor="n", pady=5)
 
-        link_box = ttk.LabelFrame(root, text="1. Link do YouTube", padding=10)
+        link_box = ttk.LabelFrame(root, text="[ 01 ]  LINKS", padding=14)
         link_box.pack(fill="both", expand=True)
-        ttk.Label(link_box, text="Cole um ou mais links (um por linha):").pack(anchor="w", pady=(0, 6))
-        text_frame = ttk.Frame(link_box)
+        ttk.Label(link_box, text="Cole um ou mais links — um por linha", style="Panel.TLabel").pack(anchor="w", pady=(0, 8))
+        text_frame = ttk.Frame(link_box, style="Panel.TFrame")
         text_frame.pack(fill="both", expand=True)
-        self.urls = tk.Text(text_frame, height=7, wrap="word", font=("Segoe UI", 10), undo=True, borderwidth=1, relief="solid")
+        self.urls = tk.Text(text_frame, height=7, wrap="word", font=("Cascadia Mono", 10), undo=True, bg="#08080b", fg=text, insertbackground=cyan, selectbackground=purple_dark, selectforeground="#ffffff", borderwidth=1, highlightthickness=1, highlightbackground=border, highlightcolor=purple, relief="flat", padx=11, pady=10)
         scrollbar = ttk.Scrollbar(text_frame, orient="vertical", command=self.urls.yview)
         self.urls.configure(yscrollcommand=scrollbar.set)
         self.urls.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
-        buttons = ttk.Frame(link_box)
+        buttons = ttk.Frame(link_box, style="Panel.TFrame")
         buttons.pack(fill="x", pady=(8, 0))
-        ttk.Button(buttons, text="Colar", command=self.paste).pack(side="left")
-        ttk.Button(buttons, text="Limpar", command=lambda: self.urls.delete("1.0", "end")).pack(side="left", padx=8)
+        ttk.Button(buttons, text="⌁ COLAR", command=self.paste).pack(side="left")
+        ttk.Button(buttons, text="× LIMPAR", style="Danger.TButton", command=lambda: self.urls.delete("1.0", "end")).pack(side="left", padx=8)
 
-        format_box = ttk.LabelFrame(root, text="2. Formato", padding=10)
+        format_box = ttk.LabelFrame(root, text="[ 02 ]  FORMATO", padding=14)
         format_box.pack(fill="x", pady=12)
         ttk.Radiobutton(format_box, text="Vídeo", variable=self.mode, value="video", command=self._toggle_mode).grid(row=0, column=0, sticky="w")
         self.video_combo = ttk.Combobox(format_box, textvariable=self.video_quality, values=VIDEO_QUALITIES, state="readonly", width=22)
@@ -114,22 +149,22 @@ class DownloaderApp(tk.Tk):
         ttk.Checkbutton(format_box, text="Baixar playlist inteira", variable=self.playlist).grid(row=1, column=0, columnspan=2, sticky="w", pady=(12, 0))
         ttk.Checkbutton(format_box, text="Abrir pasta ao concluir", variable=self.open_after).grid(row=1, column=2, columnspan=2, sticky="w", pady=(12, 0))
 
-        destination = ttk.LabelFrame(root, text="3. Onde salvar", padding=10)
+        destination = ttk.LabelFrame(root, text="[ 03 ]  DESTINO MEMORIZADO", padding=14)
         destination.pack(fill="x")
         ttk.Entry(destination, textvariable=self.output_dir).pack(side="left", fill="x", expand=True)
-        ttk.Button(destination, text="Escolher pasta...", command=self.choose_output).pack(side="left", padx=(8, 0))
+        ttk.Button(destination, text="ESCOLHER PASTA...", command=self.choose_output).pack(side="left", padx=(8, 0))
 
         bottom = ttk.Frame(root)
         bottom.pack(fill="x", pady=(14, 0))
-        self.progress = ttk.Progressbar(bottom, mode="determinate", maximum=100)
+        self.progress = ttk.Progressbar(bottom, mode="determinate", maximum=100, style="Kerosene.Horizontal.TProgressbar")
         self.progress.pack(fill="x")
         status_line = ttk.Frame(bottom)
         status_line.pack(fill="x", pady=(7, 0))
         ttk.Label(status_line, textvariable=self.status).pack(side="left")
         ttk.Label(status_line, textvariable=self.progress_text).pack(side="left", padx=10)
-        self.cancel_button = ttk.Button(status_line, text="Cancelar", command=self.cancel, state="disabled")
+        self.cancel_button = ttk.Button(status_line, text="CANCELAR", style="Danger.TButton", command=self.cancel, state="disabled")
         self.cancel_button.pack(side="right", padx=(8, 0))
-        self.download_button = ttk.Button(status_line, text="Baixar agora", style="Accent.TButton", command=self.start_download)
+        self.download_button = ttk.Button(status_line, text="↓  INICIAR DOWNLOAD", style="Accent.TButton", command=self.start_download)
         self.download_button.pack(side="right")
 
     def _check_tools(self) -> None:

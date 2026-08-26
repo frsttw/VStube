@@ -11,6 +11,7 @@ Aplicativo pessoal para Windows com interface gráfica para baixar vídeos ou ex
 - Barra de progresso e cancelamento.
 - Memoriza automaticamente a última pasta de destino.
 - Instalador inclui yt-dlp, FFmpeg, FFprobe e Deno.
+- Interface escura inspirada na estética cyberpunk do Kerosene.
 
 Use somente para conteúdo próprio, de domínio público ou que você tenha permissão para baixar.
 

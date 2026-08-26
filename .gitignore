@@ -5,4 +5,5 @@ installer/
 assets/tools/
 assets/app-icon.png
 assets/icon-extraido.png
+assets/ui-preview.png
 *.pyc

@@ -1,5 +1,5 @@
 #define MyAppName "Baixador de Vídeos e Áudios"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "frsttw"
 #define MyAppExeName "Baixador de Videos e Audios.exe"
 
