@@ -11,7 +11,7 @@
 <p align="center">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-7c4dff?style=for-the-badge&logo=windows11&logoColor=white">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.13-a866ff?style=for-the-badge&logo=python&logoColor=white">
-  <img alt="Versão" src="https://img.shields.io/badge/versão-3.0.0-40e0d0?style=for-the-badge">
+  <img alt="Versão" src="https://img.shields.io/badge/versão-3.1.0-40e0d0?style=for-the-badge">
   <img alt="Licença" src="https://img.shields.io/badge/licença-MIT-f4f4f5?style=for-the-badge">
 </p>
 
@@ -109,4 +109,4 @@ Use o Vsy ytd somente para conteúdo próprio, de domínio público ou que você
 
 ---
 
-<p align="center">Desenvolvido por <strong>@frsttw</strong></p>
+<p align="center">Desenvolvido por <strong><a href="https://frstt.dev">frstt.dev</a></strong> · <a href="https://github.com/frsttw">@frsttw</a></p>

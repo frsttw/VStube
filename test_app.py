@@ -112,6 +112,10 @@ class InterfaceTests(unittest.TestCase):
         self.ui._set_busy(False)
         self.assertEqual(str(self.ui.audio_combo.cget('state')), 'readonly')
 
+    def test_site_credit(self):
+        self.assertEqual(self.ui.site_mark.cget('text'), 'frstt.dev')
+        self.assertEqual(self.ui.site_mark.cget('cursor'), 'hand2')
+
     def test_preferences_and_log_limit(self):
         self.ui.output_dir.set('D:/Músicas')
         self.ui.open_after.set(False)

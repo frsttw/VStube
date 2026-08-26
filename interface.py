@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
 import sys
+import webbrowser
 
 from engine import VERSION, VIDEO_QUALITIES, AUDIO_FORMATS
 
@@ -108,6 +109,12 @@ class Interface:
         self.cancel_button = ttk.Button(actions, text="Cancelar", state="disabled", command=self.cancel)
         self.cancel_button.pack(side="right", padx=8)
         ttk.Button(actions, text="Abrir pasta", command=self.open_folder).pack(side="right")
+        self.site_mark = tk.Label(actions, text="frstt.dev", bg=BG, fg="#88749b", cursor="hand2",
+                                  font=("Segoe UI", 9, "underline"))
+        self.site_mark.pack(side="right", padx=(0, 20))
+        self.site_mark.bind("<Button-1>", lambda _event: webbrowser.open("https://frstt.dev"))
+        self.site_mark.bind("<Enter>", lambda _event: self.site_mark.configure(fg=CYAN))
+        self.site_mark.bind("<Leave>", lambda _event: self.site_mark.configure(fg="#88749b"))
         self.show_page("downloads")
 
     def _intro(self, parent, title, subtitle):
@@ -217,7 +224,12 @@ class Interface:
                                     ("Use com permissão", "Baixe conteúdo próprio, de domínio público ou autorizado pelo titular.")):
             self._label(inner, title, 12, bold=True).pack(anchor="w", pady=(8, 4))
             self._label(inner, description, color=MUTED).pack(anchor="w", pady=(0, 16))
-        self._label(inner, "Mantido por @frsttw", color=PURPLE).pack(anchor="w", pady=8)
+        self._label(inner, "Mantido por @frsttw", color=PURPLE).pack(anchor="w", pady=(8, 2))
+        site = self._label(inner, "frstt.dev  ·  site do projeto", 10, color=CYAN, cursor="hand2")
+        site.pack(anchor="w", pady=(0, 8))
+        site.bind("<Button-1>", lambda _event: webbrowser.open("https://frstt.dev"))
+        site.bind("<Enter>", lambda _event: site.configure(fg=PURPLE))
+        site.bind("<Leave>", lambda _event: site.configure(fg=CYAN))
 
     def show_page(self, key):
         self.pages[key].tkraise()

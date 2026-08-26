@@ -2,6 +2,11 @@
 
 Todas as mudanças relevantes do VStube são registradas neste arquivo.
 
+## [3.1.0] - 2026-08-26
+
+- Adicionada assinatura discreta `frstt.dev` no rodapé do aplicativo.
+- Crédito clicável na tela Sobre e no README.
+
 ## [3.0.0] - 2026-08-26
 
 - Nova interface com navegação superior, cartões de vídeo/áudio e paleta violeta/ciano.
