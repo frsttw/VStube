@@ -2,6 +2,16 @@
 
 Todas as mudanças relevantes do VStube são registradas neste arquivo.
 
+## [3.0.0] - 2026-08-26
+
+- Nova interface com navegação superior, cartões de vídeo/áudio e paleta violeta/ciano.
+- Abas Atividade, Preferências e Sobre com ações funcionais.
+- Preferências gravadas atomicamente, incluindo formato e qualidade.
+- Execução por fila de eventos para manter a interface livre durante downloads.
+- Cancelamento de download e conversão, com confirmação ao fechar durante uma tarefa.
+- Deduplicação de links e tratamento de erros na pasta de destino.
+- Testes automatizados e integração de vídeo/MP3 com mídia sintética local.
+
 ## [2.1.0] - 2026-08-26
 
 - Aplicativo renomeado para Vsy ytd, com preferências anteriores preservadas.

@@ -1,5 +1,5 @@
 #define MyAppName "Vsy ytd"
-#define MyAppVersion "2.1.0"
+#define MyAppVersion "3.0.0"
 #define MyAppPublisher "frsttw"
 #define MyAppExeName "Vsy ytd.exe"
 

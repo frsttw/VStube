@@ -19,6 +19,8 @@ Copy-Item (Find-WinGetTool 'deno' 'DenoLand.Deno') (Join-Path $toolsDir 'deno.ex
 
 Push-Location $projectDir
 try {
+    python -m unittest test_app -v
+    if ($LASTEXITCODE -ne 0) { throw 'Falha nos testes do aplicativo.' }
     python -m PyInstaller --noconfirm --clean '.\VStube.spec'
     if ($LASTEXITCODE -ne 0) { throw 'Falha ao compilar o aplicativo.' }
     $iscc = Join-Path $env:LOCALAPPDATA 'Programs\Inno Setup 6\ISCC.exe'

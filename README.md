@@ -11,7 +11,7 @@
 <p align="center">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-7c4dff?style=for-the-badge&logo=windows11&logoColor=white">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.13-a866ff?style=for-the-badge&logo=python&logoColor=white">
-  <img alt="Versão" src="https://img.shields.io/badge/versão-2.1.0-40e0d0?style=for-the-badge">
+  <img alt="Versão" src="https://img.shields.io/badge/versão-3.0.0-40e0d0?style=for-the-badge">
   <img alt="Licença" src="https://img.shields.io/badge/licença-MIT-f4f4f5?style=for-the-badge">
 </p>
 
@@ -34,8 +34,11 @@ O **Vsy ytd** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência vis
 - Compatibilidade com links individuais e playlists.
 - Processamento de vários links, um por linha.
 - Barra de progresso e cancelamento em tempo real.
-- Memória automática da última pasta escolhida.
-- Interface escura responsiva com identidade visual própria.
+- Memória automática da pasta, formato, qualidade e preferências.
+- Navegação por Downloads, Atividade, Preferências e Sobre.
+- Interface escura com cartões, cores violeta/ciano e controles legíveis.
+- Registro da sessão para acompanhar downloads e conversões.
+- Cancelamento em segundo plano, incluindo processos de conversão.
 - Instalador independente com todos os componentes necessários.
 
 ## Como usar
@@ -44,7 +47,9 @@ O **Vsy ytd** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência vis
 2. Execute o instalador e abra o Vsy ytd pelo atalho criado.
 3. Cole um ou mais links, um por linha.
 4. Escolha vídeo ou áudio e defina a qualidade.
-5. Selecione a pasta de destino e clique em **INICIAR DOWNLOAD**.
+5. Selecione a pasta de destino e clique em **Baixar agora** (ou Ctrl+Enter).
+
+A aba **Preferências** permite baixar playlists inteiras e abrir a pasta ao concluir. Em **Atividade**, acompanhe o registro da sessão. O percentual se refere ao arquivo atual; vídeo e áudio podem ser baixados separadamente antes da junção.
 
 > [!NOTE]
 > O instalador ainda não possui assinatura digital. O Windows pode exibir um aviso do SmartScreen na primeira execução. O código-fonte está disponível neste repositório para auditoria.
@@ -64,7 +69,11 @@ O **Vsy ytd** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência vis
 
 ```text
 Vsy ytd/
-├── app.py                 # Interface e lógica principal
+├── app.py                 # Estado e coordenação da interface
+├── interface.py           # Navegação, cartões e tema visual
+├── engine.py              # Comandos, preferências e execução dos downloads
+├── test_app.py            # Testes de comportamento e interface
+├── test_media.py          # Integração com mídia sintética local
 ├── assets/                # Identidade visual
 ├── docs/                  # Imagens da documentação
 ├── VStube.spec            # Empacotamento do executável
@@ -82,9 +91,17 @@ Instale Python, PyInstaller, Inno Setup, yt-dlp, FFmpeg e Deno. Em seguida:
 
 O script reúne as ferramentas, gera `Vsy ytd.exe` e cria `Vsy-ytd-Setup.exe`.
 
+Para executar os testes:
+
+```powershell
+python -m unittest test_app test_media -v
+```
+
+O teste de integração gera um vídeo sintético com FFmpeg e o serve apenas em localhost. Não baixa conteúdo do YouTube durante a validação.
+
 ## Privacidade
 
-O Vsy ytd funciona localmente e não mantém servidor próprio, conta de usuário ou telemetria. Links, preferências e arquivos permanecem no computador do usuário. A única configuração persistida é a última pasta de destino escolhida.
+O Vsy ytd não mantém servidor próprio, conta de usuário ou telemetria. Para baixar arquivos, conecta-se aos sites dos links informados. Pasta, formato, qualidade e opções ficam salvos localmente; o registro de atividade permanece apenas na sessão e não é salvo em disco.
 
 ## Uso responsável
 
