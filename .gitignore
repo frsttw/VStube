@@ -3,4 +3,6 @@ build/
 dist/
 installer/
 assets/tools/
+assets/app-icon.png
+assets/icon-extraido.png
 *.pyc
