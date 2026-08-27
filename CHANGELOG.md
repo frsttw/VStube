@@ -2,6 +2,11 @@
 
 Todas as mudanças relevantes do VStube são registradas neste arquivo.
 
+## [3.2.0] - 2026-08-27
+
+- Atualizado o `yt-dlp` incluído para acompanhar as mudanças recentes do YouTube e corrigir falhas HTTP 403 durante downloads.
+- O processo de build passa a atualizar o componente automaticamente antes de gerar o instalador.
+
 ## [3.1.0] - 2026-08-26
 
 - Adicionada assinatura discreta `frstt.dev` no rodapé do aplicativo.

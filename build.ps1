@@ -12,7 +12,12 @@ function Find-WinGetTool([string]$name, [string]$packagePattern) {
     return $match
 }
 
-Copy-Item (Find-WinGetTool 'yt-dlp' 'yt-dlp.yt-dlp') (Join-Path $toolsDir 'yt-dlp.exe') -Force
+$ytdlpPath = Join-Path $toolsDir 'yt-dlp.exe'
+Copy-Item (Find-WinGetTool 'yt-dlp' 'yt-dlp.yt-dlp') $ytdlpPath -Force
+# O YouTube muda os endpoints de mídia com frequência; empacote a correção
+# mais recente do canal nightly junto com cada instalador.
+& $ytdlpPath --update-to nightly
+if ($LASTEXITCODE -ne 0) { throw 'Falha ao atualizar yt-dlp para a versão compatível.' }
 Copy-Item (Find-WinGetTool 'ffmpeg' 'Gyan.FFmpeg') (Join-Path $toolsDir 'ffmpeg.exe') -Force
 Copy-Item (Find-WinGetTool 'ffprobe' 'Gyan.FFmpeg') (Join-Path $toolsDir 'ffprobe.exe') -Force
 Copy-Item (Find-WinGetTool 'deno' 'DenoLand.Deno') (Join-Path $toolsDir 'deno.exe') -Force

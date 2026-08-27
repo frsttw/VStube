@@ -9,7 +9,7 @@ import threading
 from pathlib import Path
 from urllib.parse import urlsplit
 
-VERSION = "3.1.0"
+VERSION = "3.2.0"
 VIDEO_QUALITIES = ("Melhor disponível", "Até 2160p (4K)", "Até 1440p", "Até 1080p", "Até 720p", "Até 480p", "Até 360p")
 AUDIO_FORMATS = ("MP3", "M4A")
 DEFAULTS = {"mode": "video", "video_quality": "Até 1080p", "audio_format": "MP3",
