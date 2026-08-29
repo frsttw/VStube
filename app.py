@@ -11,7 +11,8 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
-from engine import DownloadJob, VERSION, read_settings, write_settings, parse_urls, build_command
+from engine import (DownloadJob, VERSION, read_settings, write_settings, parse_urls,
+                    build_command, download_archive_path)
 from interface import Interface, PURPLE, BORDER
 
 APP_NAME = "Vsy ytd"
@@ -170,7 +171,10 @@ class DownloaderApp(Interface, tk.Tk):
             self._check_tools()
 
     def _command(self, urls, destination):
-        return build_command(self.ytdlp, self.ffmpeg, urls, destination, self._settings())
+        settings = self._settings()
+        archive = download_archive_path(destination, settings, SETTINGS_DIR / "archives")
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        return build_command(self.ytdlp, self.ffmpeg, urls, destination, settings, archive)
 
     def start_download(self):
         if self.busy:

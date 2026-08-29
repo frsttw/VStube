@@ -9,7 +9,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 import app
-from engine import DEFAULTS, DownloadJob, build_command, parse_urls, read_settings, write_settings
+from engine import (DEFAULTS, DownloadJob, build_command, download_archive_path,
+                    parse_urls, read_settings, write_settings)
 
 
 class SettingsTests(unittest.TestCase):
@@ -47,6 +48,17 @@ class CommandTests(unittest.TestCase):
                 self.assertIn('-x' if mode == 'audio' else '-f', command)
                 self.assertEqual(command[-2:], ['--', 'https://youtu.be/a'])
                 self.assertIn('--no-overwrites', command)
+
+    def test_archive_option_and_variants(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination, archive_root = Path(directory) / 'Videos', Path(directory) / 'archives'
+            video = download_archive_path(destination, dict(DEFAULTS, mode='video'), archive_root)
+            audio = download_archive_path(destination, dict(DEFAULTS, mode='audio'), archive_root)
+            self.assertEqual(video, download_archive_path(destination, dict(DEFAULTS, mode='video'), archive_root))
+            self.assertNotEqual(video, audio)
+            command = build_command('yt-dlp.exe', 'C:/tools/ffmpeg.exe', ['https://youtu.be/a'],
+                                    destination, dict(DEFAULTS), video)
+            self.assertEqual(command[-4:-2], ['--download-archive', str(video)])
 
 
 class WorkerTests(unittest.TestCase):

@@ -11,7 +11,7 @@
 <p align="center">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-7c4dff?style=for-the-badge&logo=windows11&logoColor=white">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.13-a866ff?style=for-the-badge&logo=python&logoColor=white">
-  <img alt="Versão" src="https://img.shields.io/badge/versão-3.2.0-40e0d0?style=for-the-badge">
+  <img alt="Versão" src="https://img.shields.io/badge/versão-3.3.0-40e0d0?style=for-the-badge">
   <img alt="Licença" src="https://img.shields.io/badge/licença-MIT-f4f4f5?style=for-the-badge">
 </p>
 
@@ -35,6 +35,7 @@ O **Vsy ytd** transforma o fluxo do `yt-dlp` e do FFmpeg em uma experiência vis
 - Processamento de vários links, um por linha.
 - Barra de progresso e cancelamento em tempo real.
 - Memória automática da pasta, formato, qualidade e preferências.
+- Histórico por pasta e formato para evitar baixar o mesmo vídeo duas vezes.
 - Navegação por Downloads, Atividade, Preferências e Sobre.
 - Interface escura com cartões, cores violeta/ciano e controles legíveis.
 - Registro da sessão para acompanhar downloads e conversões.

@@ -2,6 +2,11 @@
 
 Todas as mudanças relevantes do VStube são registradas neste arquivo.
 
+## [3.3.0] - 2026-08-29
+
+- Adicionado histórico persistente do `yt-dlp` para ignorar vídeos repetidos em páginas com itens duplicados.
+- O histórico é separado por pasta, modo e qualidade para manter downloads intencionais disponíveis.
+
 ## [3.2.0] - 2026-08-27
 
 - Atualizado o `yt-dlp` incluído para acompanhar as mudanças recentes do YouTube e corrigir falhas HTTP 403 durante downloads.

@@ -1,6 +1,7 @@
 """Execução dos downloads, independente da interface gráfica."""
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import queue
@@ -9,7 +10,7 @@ import threading
 from pathlib import Path
 from urllib.parse import urlsplit
 
-VERSION = "3.2.0"
+VERSION = "3.3.0"
 VIDEO_QUALITIES = ("Melhor disponível", "Até 2160p (4K)", "Até 1440p", "Até 1080p", "Até 720p", "Até 480p", "Até 360p")
 AUDIO_FORMATS = ("MP3", "M4A")
 DEFAULTS = {"mode": "video", "video_quality": "Até 1080p", "audio_format": "MP3",
@@ -58,7 +59,20 @@ def parse_urls(value: str) -> list[str]:
     return urls
 
 
-def build_command(ytdlp: str, ffmpeg: str, urls: list[str], destination: Path, settings: dict) -> list[str]:
+def download_archive_path(destination: Path, settings: dict, archive_root: Path) -> Path:
+    """Return a stable archive file for one destination and media variant."""
+    identity = "\0".join((
+        str(destination.resolve()).casefold(),
+        str(settings.get("mode", "video")),
+        str(settings.get("video_quality", "")),
+        str(settings.get("audio_format", "")),
+    ))
+    digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:24]
+    return archive_root / f"{digest}.txt"
+
+
+def build_command(ytdlp: str, ffmpeg: str, urls: list[str], destination: Path,
+                  settings: dict, archive_path: Path | None = None) -> list[str]:
     command = [ytdlp, "--ignore-config", "--newline", "--progress", "--no-color", "--encoding", "utf-8",
                "--windows-filenames", "--no-overwrites", "--ffmpeg-location", str(Path(ffmpeg).parent),
                "--yes-playlist" if settings["playlist"] else "--no-playlist"]
@@ -73,6 +87,8 @@ def build_command(ytdlp: str, ffmpeg: str, urls: list[str], destination: Path, s
         match = re.search(r"(\d+)p", settings["video_quality"])
         selector = "bv*+ba/b" if not match else f"bv*[height<={match[1]}]+ba/b[height<={match[1]}]"
         command.extend(["-f", selector, "--merge-output-format", "mp4"])
+    if archive_path is not None:
+        command.extend(["--download-archive", str(archive_path)])
     return command + ["--"] + urls
 
 
