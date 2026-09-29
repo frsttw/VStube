@@ -55,7 +55,7 @@ class DownloaderApp(Interface, tk.Tk):
         self.output_dir = tk.StringVar(value=settings["output_dir"])
         self.playlist = tk.BooleanVar(value=settings["playlist"])
         self.open_after = tk.BooleanVar(value=settings["open_after"])
-        self.status = tk.StringVar(value="Pronto para baixar")
+        self.status = tk.StringVar(value="Ready to download")
         self.progress_text = tk.StringVar(value="")
         self.link_count = tk.StringVar(value="0 links")
         self.busy = False
@@ -107,14 +107,14 @@ class DownloaderApp(Interface, tk.Tk):
         try:
             write_settings(SETTINGS_FILE, data)
         except OSError as exc:
-            self.status.set("Não foi possível salvar as preferências")
-            self._append_log(f"Preferências: {exc}")
+            self.status.set("Could not save preferences")
+            self._append_log(f"Preferences: {exc}")
 
     def _check_tools(self):
         if not self.ytdlp or not self.ffmpeg:
-            self.status.set("Componentes ausentes — reinstale o aplicativo")
+            self.status.set("Missing components — reinstall the app")
             self.download_button.configure(state="disabled")
-            self._append_log("Não foi possível localizar yt-dlp ou FFmpeg.")
+            self._append_log("Could not find yt-dlp or FFmpeg.")
 
     def _links_changed(self, _event=None):
         if self.urls.edit_modified():
@@ -136,10 +136,10 @@ class DownloaderApp(Interface, tk.Tk):
                 self.urls.delete("1.0", "end")
                 self.urls.insert("1.0", (current + "\n" if current else "") + value)
         except tk.TclError:
-            self.status.set("Copie um link antes de colar")
+            self.status.set("Copy a link before pasting")
 
     def choose_output(self):
-        selected = filedialog.askdirectory(parent=self, title="Escolha a pasta de destino",
+        selected = filedialog.askdirectory(parent=self, title="Choose a destination folder",
                     initialdir=self.output_dir.get() if Path(self.output_dir.get()).is_dir() else str(Path.home()))
         if selected:
             self.output_dir.set(selected)
@@ -149,7 +149,7 @@ class DownloaderApp(Interface, tk.Tk):
         folder = Path(destination or self.output_dir.get().strip())
         try:
             if not folder.is_dir():
-                raise OSError("A pasta ainda não existe. Ela será criada ao iniciar o download.")
+                raise OSError("The folder does not exist yet. It will be created when the download starts.")
             os.startfile(folder)
         except OSError as exc:
             messagebox.showinfo(APP_NAME, str(exc), parent=self)
@@ -185,7 +185,7 @@ class DownloaderApp(Interface, tk.Tk):
         try:
             urls = parse_urls(self.urls.get("1.0", "end"))
             if not self.output_dir.get().strip():
-                raise ValueError("Escolha uma pasta de destino.")
+                raise ValueError("Choose a destination folder.")
             destination = Path(self.output_dir.get().strip()).expanduser().resolve()
             destination.mkdir(parents=True, exist_ok=True)
         except (ValueError, OSError) as exc:
@@ -195,11 +195,11 @@ class DownloaderApp(Interface, tk.Tk):
         self.last_destination = destination
         self.open_on_finish = self.open_after.get()
         self._set_busy(True)
-        self.status.set("Preparando o download…")
+        self.status.set("Preparing download…")
         self.progress_text.set("Conectando")
         self.progress.configure(mode="indeterminate", value=0)
         self.progress.start(15)
-        self._append_log(f"\nNovo lote: {len(urls)} link(s) · {self.mode.get()} · {destination}")
+        self._append_log(f"\nNew batch: {len(urls)} link(s) · {self.mode.get()} · {destination}")
         self.job = DownloadJob(self._command(urls, destination), self.events)
         threading.Thread(target=self.job.run, daemon=True).start()
 
@@ -232,17 +232,17 @@ class DownloaderApp(Interface, tk.Tk):
                     self.progress.stop()
                     self.progress.configure(mode="determinate", value=percent)
                     self.progress_text.set(value.replace("[download]", "").strip())
-                    self.status.set("Baixando · progresso do arquivo atual")
+                    self.status.set("Downloading · current file progress")
                 elif "[Merger]" in value or "[ExtractAudio]" in value:
                     self.progress.configure(mode="indeterminate")
                     self.progress.start(15)
-                    self.status.set("Finalizando o arquivo…")
-                    self.progress_text.set("Conversão")
+                    self.status.set("Finishing file…")
+                    self.progress_text.set("Conversion")
         self.after(80, self._drain_events)
 
     def cancel(self):
         if self.busy and self.job:
-            self.status.set("Cancelando download e conversão…")
+            self.status.set("Cancelling download and conversion…")
             self.cancel_button.configure(state="disabled")
             # Cancellation is also asynchronous; Windows may take a moment to stop the process tree.
             self.job.cancelled.set()
@@ -254,27 +254,27 @@ class DownloaderApp(Interface, tk.Tk):
         self._set_busy(False)
         self.progress_text.set("")
         if cancelled:
-            self.status.set("Download cancelado")
-            self._append_log("Cancelado. Arquivos parciais são mantidos para permitir retomada.")
+            self.status.set("Download cancelled")
+            self._append_log("Cancelled. Partial files are kept so you can resume later.")
         elif code == 0:
             self.progress.configure(value=100)
-            self.status.set("Concluído · arquivos disponíveis na pasta")
+            self.status.set("Complete · files are available in the folder")
             if self.open_on_finish and not self.closing:
                 self.open_folder(self.last_destination)
         else:
-            self.status.set("Não foi possível concluir · confira Atividade")
-            self._append_log(error or "O processo terminou com erro.")
+            self.status.set("Could not complete · check Activity")
+            self._append_log(error or "The process ended with an error.")
             self.show_page("activity")
             if not self.closing:
-                messagebox.showerror(APP_NAME, "O download não foi concluído.\n\n" +
-                    (error or "Confira o registro na aba Atividade."), parent=self)
+                messagebox.showerror(APP_NAME, "The download could not be completed.\n\n" +
+                    (error or "Check the Activity log."), parent=self)
         self.job = None
         if self.closing:
             self.destroy()
 
     def close(self):
         if self.busy:
-            if not messagebox.askyesno(APP_NAME, "Cancelar o download em andamento e fechar?", parent=self):
+            if not messagebox.askyesno(APP_NAME, "Cancel the active download and close?", parent=self):
                 return
             self.closing = True
             self.cancel()

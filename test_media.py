@@ -1,4 +1,4 @@
-"""Teste de integração sem acesso à internet: mídia sintética servida em localhost."""
+"""Integration test without internet access: synthetic media served on localhost."""
 import functools
 import http.server
 import queue
@@ -21,7 +21,7 @@ class MediaIntegrationTests(unittest.TestCase):
     def test_video_and_mp3(self):
         ffmpeg, ytdlp = find_program('ffmpeg'), find_program('yt-dlp')
         if not ffmpeg or not ytdlp:
-            self.skipTest('FFmpeg e yt-dlp necessários para integração')
+            self.skipTest('FFmpeg and yt-dlp are required for integration tests')
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / 'source.mp4'
@@ -38,7 +38,7 @@ class MediaIntegrationTests(unittest.TestCase):
                 for mode, extension in (('video', 'mp4'), ('audio', 'mp3')):
                     dest = root / mode
                     dest.mkdir()
-                    settings = dict(DEFAULTS, mode=mode, video_quality='Melhor disponível')
+                    settings = dict(DEFAULTS, mode=mode, video_quality='Best available')
                     events = queue.Queue()
                     job = DownloadJob(build_command(ytdlp, ffmpeg, [url], dest, settings), events)
                     worker = threading.Thread(target=job.run, daemon=True)
@@ -47,7 +47,7 @@ class MediaIntegrationTests(unittest.TestCase):
                     if worker.is_alive():
                         job.cancel()
                         worker.join(timeout=10)
-                        self.fail('Tempo limite de integração excedido')
+                        self.fail('Integration timeout exceeded')
                     records = []
                     while not events.empty():
                         records.append(events.get())

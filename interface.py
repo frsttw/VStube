@@ -1,4 +1,4 @@
-"""Componentes visuais do Vsy ytd."""
+"""Visual components for Vsy ytd."""
 import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
@@ -73,7 +73,7 @@ class Interface:
         nav = tk.Frame(header, bg=BG)
         nav.pack(side="right", pady=8)
         self.nav = {}
-        for key, title in (("downloads", "Downloads"), ("activity", "Atividade"), ("settings", "Preferências"), ("about", "Sobre")):
+        for key, title in (("downloads", "Downloads"), ("activity", "Activity"), ("settings", "Preferences"), ("about", "About")):
             button = ttk.Button(nav, text=title, command=lambda k=key: self.show_page(k))
             button.pack(side="left", padx=(6, 0))
             self.nav[key] = button
@@ -103,12 +103,12 @@ class Interface:
         self.progress.pack(fill="x", pady=(9, 12))
         actions = tk.Frame(footer, bg=BG)
         actions.pack(fill="x")
-        self._label(actions, "Seus arquivos, no seu computador.", 9, MUTED).pack(side="left")
-        self.download_button = ttk.Button(actions, text="↓  Baixar agora", style="Accent.TButton", command=self.start_download)
+        self._label(actions, "Your files, on your computer.", 9, MUTED).pack(side="left")
+        self.download_button = ttk.Button(actions, text="↓  Download now", style="Accent.TButton", command=self.start_download)
         self.download_button.pack(side="right")
-        self.cancel_button = ttk.Button(actions, text="Cancelar", state="disabled", command=self.cancel)
+        self.cancel_button = ttk.Button(actions, text="Cancel", state="disabled", command=self.cancel)
         self.cancel_button.pack(side="right", padx=8)
-        ttk.Button(actions, text="Abrir pasta", command=self.open_folder).pack(side="right")
+        ttk.Button(actions, text="Open folder", command=self.open_folder).pack(side="right")
         self.site_mark = tk.Label(actions, text="frstt.dev", bg=BG, fg="#88749b", cursor="hand2",
                                   font=("Segoe UI", 9, "underline"))
         self.site_mark.pack(side="right", padx=(0, 20))
@@ -123,17 +123,17 @@ class Interface:
 
     def _downloads_page(self):
         page = self.pages["downloads"]
-        self._intro(page, "O próximo download começa aqui", "Cole seus links, escolha o formato e deixe o resto com o Vsy.")
+        self._intro(page, "Your next download starts here", "Paste your links, choose a format, and let Vsy handle the rest.")
         # Pack the destination first at the bottom to preserve its space on short screens.
         outer, dest = self._card(page)
         outer.pack(side="bottom", fill="x", pady=(14, 0))
         desthead = tk.Frame(dest, bg=CARD)
         desthead.pack(fill="x", pady=(0, 8))
-        self._label(desthead, "Pasta de destino", 11, bold=True).pack(side="left")
-        self._label(desthead, "Salva automaticamente", 9, MUTED).pack(side="right")
+        self._label(desthead, "Destination folder", 11, bold=True).pack(side="left")
+        self._label(desthead, "Saved automatically", 9, MUTED).pack(side="right")
         row = tk.Frame(dest, bg=CARD)
         row.pack(fill="x")
-        choose = ttk.Button(row, text="Escolher…", command=self.choose_output)
+        choose = ttk.Button(row, text="Choose…", command=self.choose_output)
         choose.pack(side="right", padx=(10, 0))
         entry = ttk.Entry(row, textvariable=self.output_dir)
         entry.pack(side="left", fill="x", expand=True)
@@ -148,9 +148,9 @@ class Interface:
         outer.grid(row=0, column=0, sticky="nsew", padx=(0, 14))
         head = tk.Frame(links, bg=CARD)
         head.pack(fill="x")
-        self._label(head, "Links para baixar", 12, bold=True).pack(side="left")
+        self._label(head, "Links to download", 12, bold=True).pack(side="left")
         self._label(head, textvariable=self.link_count, color=MUTED, size=9).pack(side="right")
-        self._label(links, "YouTube e sites compatíveis · um link por linha", 9, MUTED).pack(anchor="w", pady=(5, 12))
+        self._label(links, "YouTube and supported sites · one link per line", 9, MUTED).pack(anchor="w", pady=(5, 12))
         textrow = tk.Frame(links, bg=CARD)
         textrow.pack(fill="both", expand=True)
         self.urls = tk.Text(textrow, height=3, width=25, wrap="word", undo=True, font=("Segoe UI", 11),
@@ -164,7 +164,7 @@ class Interface:
         self.urls.bind("<<Modified>>", self._links_changed)
         controls = tk.Frame(links, bg=CARD)
         controls.pack(side="bottom", before=textrow, fill="x", pady=(12, 0))
-        for title, callback in (("Colar links", self.paste), ("Limpar", self.clear_links)):
+        for title, callback in (("Paste links", self.paste), ("Clear", self.clear_links)):
             button = ttk.Button(controls, text=title, command=callback)
             button.pack(side="left", padx=(0, 8))
             self.inputs.append(button)
@@ -173,8 +173,8 @@ class Interface:
         side = tk.Frame(columns, bg=BG)
         side.grid(row=0, column=1, sticky="nsew")
         self.mode_cards = {}
-        for mode, title, hint in (("video", "Vídeo", "Imagem e som, na qualidade escolhida."),
-                                   ("audio", "Somente áudio", "Sua trilha em MP3 ou M4A.")):
+        for mode, title, hint in (("video", "Video", "Picture and sound at your chosen quality."),
+                                   ("audio", "Audio only", "Your soundtrack in MP3 or M4A.")):
             outer, inner = self._card(side)
             self.mode_cards[mode] = outer
             outer.pack(fill="both", expand=True, pady=(0, 10 if mode == "video" else 0))
@@ -189,21 +189,21 @@ class Interface:
 
     def _settings_page(self):
         page = self.pages["settings"]
-        self._intro(page, "Do seu jeito", "Suas escolhas ficam salvas para a próxima vez.")
+        self._intro(page, "Your way", "Your choices are saved for next time.")
         outer, inner = self._card(page)
         outer.pack(fill="x")
-        self._label(inner, "Comportamento dos downloads", 13, bold=True).pack(anchor="w", pady=(0, 12))
-        for title, hint, var in (("Baixar a playlist inteira", "Desativado: baixa apenas o vídeo do link, quando disponível.", self.playlist),
-                                 ("Abrir a pasta ao concluir", "Abre o destino quando o lote termina sem erros.", self.open_after)):
+        self._label(inner, "Download behavior", 13, bold=True).pack(anchor="w", pady=(0, 12))
+        for title, hint, var in (("Download the entire playlist", "Disabled: download only the linked video when available.", self.playlist),
+                                 ("Open the folder when complete", "Open the destination when the batch finishes without errors.", self.open_after)):
             check = ttk.Checkbutton(inner, text=title, variable=var)
             check.pack(anchor="w", pady=(8, 2))
             self._label(inner, hint, 10, MUTED).pack(anchor="w", padx=24, pady=(0, 12))
             self.inputs.append(check)
-        self._label(inner, "Formato, qualidade e pasta também são lembrados automaticamente.", 10, color=CYAN).pack(anchor="w", pady=(16, 0))
+        self._label(inner, "Format, quality, and folder are also remembered automatically.", 10, color=CYAN).pack(anchor="w", pady=(16, 0))
 
     def _activity_page(self):
         page = self.pages["activity"]
-        self._intro(page, "Atividade", "Acompanhe o download e a conversão sem abrir o terminal.")
+        self._intro(page, "Activity", "Follow the download and conversion without opening a terminal.")
         outer, inner = self._card(page)
         outer.pack(fill="both", expand=True)
         self.log = tk.Text(inner, height=8, wrap="word", state="disabled", bg=CARD, fg=MUTED,
@@ -212,20 +212,20 @@ class Interface:
         self.log.configure(yscrollcommand=scroll.set)
         scroll.pack(side="right", fill="y")
         self.log.pack(fill="both", expand=True)
-        self._label(page, "Registro desta sessão. Não é salvo em disco.", 9, MUTED).pack(anchor="w", pady=(10, 0))
+        self._label(page, "Session log. It is not saved to disk.", 9, MUTED).pack(anchor="w", pady=(10, 0))
 
     def _about_page(self):
         page = self.pages["about"]
-        self._intro(page, "Simples por fora. Completo por dentro.", "Vsy ytd  •  " + VERSION)
+        self._intro(page, "Simple outside. Complete inside.", "Vsy ytd  •  " + VERSION)
         outer, inner = self._card(page)
         outer.pack(fill="x")
-        for title, description in (("Vídeo e áudio, sem complicação", "Interface local para yt-dlp, FFmpeg, FFprobe e Deno."),
-                                    ("Sem conta ou telemetria", "Conecta-se aos sites dos links para buscar e baixar os arquivos."),
-                                    ("Use com permissão", "Baixe conteúdo próprio, de domínio público ou autorizado pelo titular.")):
+        for title, description in (("Video and audio, without the hassle", "A local interface for yt-dlp, FFmpeg, FFprobe, and Deno."),
+                                    ("No account or telemetry", "Connects to the linked sites to find and download files."),
+                                    ("Use with permission", "Download your own content, public-domain content, or content you are authorized to use.")):
             self._label(inner, title, 12, bold=True).pack(anchor="w", pady=(8, 4))
             self._label(inner, description, color=MUTED).pack(anchor="w", pady=(0, 16))
-        self._label(inner, "Mantido por @frsttw", color=PURPLE).pack(anchor="w", pady=(8, 2))
-        site = self._label(inner, "frstt.dev  ·  site do projeto", 10, color=CYAN, cursor="hand2")
+        self._label(inner, "Maintained by @frsttw", color=PURPLE).pack(anchor="w", pady=(8, 2))
+        site = self._label(inner, "frstt.dev  ·  project website", 10, color=CYAN, cursor="hand2")
         site.pack(anchor="w", pady=(0, 8))
         site.bind("<Button-1>", lambda _event: webbrowser.open("https://frstt.dev"))
         site.bind("<Enter>", lambda _event: site.configure(fg=PURPLE))

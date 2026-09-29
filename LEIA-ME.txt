@@ -1,16 +1,15 @@
-Vsy ytd
+Vsy ytd — quick start
 
-1. Abra o Vsy ytd pelo atalho da Área de Trabalho.
-2. Cole um ou mais links do YouTube, um por linha.
-3. Escolha Vídeo e a resolução desejada, ou Somente áudio em MP3/M4A.
-4. Escolha a pasta onde deseja salvar.
-5. Clique em "Baixar agora" ou pressione Ctrl+Enter.
+1. Open Vsy ytd from the Start menu.
+2. Paste one or more YouTube links, one per line.
+3. Choose Video and the desired resolution, or Audio only in MP3/M4A.
+4. Choose the destination folder.
+5. Click "Download now" or press Ctrl+Enter.
 
-Em Preferências, configure playlists e abertura da pasta ao concluir.
-Em Atividade, acompanhe o registro do download e da conversão.
+In Preferences, configure playlists and whether the destination opens when a batch completes.
+In Activity, follow the download and conversion log.
 
-Use o aplicativo somente para conteúdo próprio, de domínio público ou que você tenha
-permissão para baixar. O aplicativo não remove proteções nem acessa conteúdo privado.
+Use the application only for content you own, content in the public domain, or content you are authorized to download. The application does not bypass protections or access private content.
 
-O Vsy ytd memoriza pasta, formato, qualidade e preferências.
-O instalador já inclui yt-dlp, FFmpeg, FFprobe e Deno; não é necessário instalá-los separadamente.
+Vsy ytd remembers the folder, format, quality, and preferences.
+The installer includes yt-dlp, FFmpeg, FFprobe, and Deno; no separate installation is required.

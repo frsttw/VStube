@@ -17,7 +17,7 @@ class SettingsTests(unittest.TestCase):
     def test_atomic_roundtrip(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'config.json'
-            expected = dict(DEFAULTS, output_dir='D:/Vídeos', mode='audio', open_after=False)
+            expected = dict(DEFAULTS, output_dir='D:/Videos', mode='audio', open_after=False)
             write_settings(path, expected)
             self.assertEqual(read_settings(path), expected)
             self.assertFalse(path.with_suffix('.tmp').exists())
@@ -129,10 +129,10 @@ class InterfaceTests(unittest.TestCase):
         self.assertEqual(self.ui.site_mark.cget('cursor'), 'hand2')
 
     def test_preferences_and_log_limit(self):
-        self.ui.output_dir.set('D:/Músicas')
+        self.ui.output_dir.set('D:/Music')
         self.ui.open_after.set(False)
         self.ui._save_settings()
-        self.assertEqual(read_settings(app.SETTINGS_FILE)['output_dir'], 'D:/Músicas')
+        self.assertEqual(read_settings(app.SETTINGS_FILE)['output_dir'], 'D:/Music')
         for _ in range(410):
             self.ui._append_log('test')
         self.assertLessEqual(int(self.ui.log.index('end-1c').split('.')[0]), 400)

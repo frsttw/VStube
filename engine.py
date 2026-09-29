@@ -1,4 +1,4 @@
-"""Execução dos downloads, independente da interface gráfica."""
+"""Download execution independent from the graphical interface."""
 from __future__ import annotations
 
 import hashlib
@@ -11,11 +11,11 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 VERSION = "3.3.0"
-VIDEO_QUALITIES = ("Melhor disponível", "Até 2160p (4K)", "Até 1440p", "Até 1080p", "Até 720p", "Até 480p", "Até 360p")
+VIDEO_QUALITIES = ("Best available", "Up to 2160p (4K)", "Up to 1440p", "Up to 1080p", "Up to 720p", "Up to 480p", "Up to 360p")
 AUDIO_FORMATS = ("MP3", "M4A")
-DEFAULTS = {"mode": "video", "video_quality": "Até 1080p", "audio_format": "MP3",
+DEFAULTS = {"mode": "video", "video_quality": "Up to 1080p", "audio_format": "MP3",
             "playlist": False, "open_after": True,
-            "output_dir": str(Path.home() / "Downloads" / "Vídeos e áudios")}
+            "output_dir": str(Path.home() / "Downloads" / "Videos and Audio")}
 
 
 def read_settings(path: Path, legacy: Path | None = None) -> dict:
@@ -48,14 +48,14 @@ def write_settings(path: Path, data: dict) -> None:
 def parse_urls(value: str) -> list[str]:
     urls = list(dict.fromkeys(line.strip() for line in value.splitlines() if line.strip()))
     if not urls:
-        raise ValueError("Cole pelo menos um link para começar.")
+        raise ValueError("Paste at least one link to start.")
     for url in urls:
         try:
             parsed = urlsplit(url)
             if parsed.scheme not in ("http", "https") or not parsed.hostname or any(c.isspace() for c in url):
                 raise ValueError()
         except ValueError:
-            raise ValueError("Use links completos (https://…), um por linha.") from None
+            raise ValueError("Use complete links (https://…), one per line.") from None
     return urls
 
 

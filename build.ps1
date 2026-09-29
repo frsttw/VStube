@@ -8,16 +8,16 @@ function Find-WinGetTool([string]$name, [string]$packagePattern) {
     $match = Get-ChildItem $root -Filter "$name.exe" -Recurse -ErrorAction SilentlyContinue |
         Where-Object FullName -Like "*$packagePattern*" |
         Select-Object -First 1 -ExpandProperty FullName
-    if (-not $match) { throw "$name não foi encontrado. Instale as dependências indicadas no README." }
+    if (-not $match) { throw "$name was not found. Install the dependencies listed in the README." }
     return $match
 }
 
 $ytdlpPath = Join-Path $toolsDir 'yt-dlp.exe'
 Copy-Item (Find-WinGetTool 'yt-dlp' 'yt-dlp.yt-dlp') $ytdlpPath -Force
-# O YouTube muda os endpoints de mídia com frequência; empacote a correção
-# mais recente do canal nightly junto com cada instalador.
+# YouTube changes media endpoints frequently; bundle the latest nightly
+# correction with every installer.
 & $ytdlpPath --update-to nightly
-if ($LASTEXITCODE -ne 0) { throw 'Falha ao atualizar yt-dlp para a versão compatível.' }
+if ($LASTEXITCODE -ne 0) { throw 'Could not update yt-dlp to a compatible version.' }
 Copy-Item (Find-WinGetTool 'ffmpeg' 'Gyan.FFmpeg') (Join-Path $toolsDir 'ffmpeg.exe') -Force
 Copy-Item (Find-WinGetTool 'ffprobe' 'Gyan.FFmpeg') (Join-Path $toolsDir 'ffprobe.exe') -Force
 Copy-Item (Find-WinGetTool 'deno' 'DenoLand.Deno') (Join-Path $toolsDir 'deno.exe') -Force
@@ -25,13 +25,13 @@ Copy-Item (Find-WinGetTool 'deno' 'DenoLand.Deno') (Join-Path $toolsDir 'deno.ex
 Push-Location $projectDir
 try {
     python -m unittest test_app -v
-    if ($LASTEXITCODE -ne 0) { throw 'Falha nos testes do aplicativo.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Application tests failed.' }
     python -m PyInstaller --noconfirm --clean '.\VStube.spec'
-    if ($LASTEXITCODE -ne 0) { throw 'Falha ao compilar o aplicativo.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Application compilation failed.' }
     $iscc = Join-Path $env:LOCALAPPDATA 'Programs\Inno Setup 6\ISCC.exe'
-    if (-not (Test-Path $iscc)) { throw 'Inno Setup não foi encontrado.' }
+    if (-not (Test-Path $iscc)) { throw 'Inno Setup was not found.' }
     & $iscc '.\installer.iss'
-    if ($LASTEXITCODE -ne 0) { throw 'Falha ao compilar o instalador.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed.' }
 } finally {
     Pop-Location
 }
